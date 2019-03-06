@@ -4,6 +4,7 @@ async function setInputValue(page,item,value){
         page.type("input[name='"+item+"']",value);
     }) 
 }
+
 module.exports={
     setInputValue:setInputValue
 }
