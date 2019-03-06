@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const com= require("./common");
  (async () => {
  // const browser = await puppeteer.launch();//打开浏览器
-  const browser = await puppeteer.launch({headless: true,devtools: false})
+  const browser = await puppeteer.launch({headless: false,devtools: false})
   const page = await browser.newPage();//打开一个空白页
 //设置窗口
   await page.goto('http://uatbx.scpcdc.com.cn/');//在地址栏输入网址并等待加载
@@ -35,10 +35,11 @@ const com= require("./common");
   targetFrame.$eval('#viewDisplay', e => console.log(e.innerText));
   await targetFrame.evaluate(unfoldButton)
   await page.screenshot({path: 'example2.png'});//截个图
-  await page.waitFor(1000);     //获取新页面的时候要等待否则，新页签还没生成成功
+  await page.waitFor(2000);     //获取新页面的时候要等待否则，新页签还没生成成功
   const page2 = ( await browser.pages() )[2];//得到所有窗口使用列表索引得到新的窗
   await page2.waitFor(1000); 
   await page2.type("input[name='fldLfdw_xm']","100")
+  await page2.click("span[widgetid='btnZancun']") //调用保存按钮进行保存
   await page2.screenshot({path: 'example3.png'});//截个图
- //await browser.close();//关掉浏览器
+  await browser.close();//关掉浏览器
 })();
